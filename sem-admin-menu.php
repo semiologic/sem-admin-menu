@@ -3,8 +3,8 @@
 Plugin Name: Admin Menu
 Plugin URI: http://www.semiologic.com/software/admin-menu/
 Description: Adds a convenient admin menu to your blog. Configure its visibility under <a href="options-general.php?page=admin-menu">Settings / Admin Menu</a>.
-Version: 6.0.5
-Author: Denis de Bernardy
+Version: 6.1
+Author: Denis de Bernardy & Mike Koepke
 Author URI: http://www.getsemiologic.com
 Text Domain: sem-admin-menu
 Domain Path: /lang
@@ -101,7 +101,7 @@ class sem_admin_menu {
 		elseif ( is_tag() )
 			$redirect = get_tag_link($wp_the_query->get_queried_object_id());
 		elseif ( is_author() )
-			$redirect = get_author_link(false, $wp_the_query->get_queried_object_id());
+			$redirect = get_author_posts_url($wp_the_query->get_queried_object_id());
 		elseif ( is_day() && get_query_var('year') && get_query_var('monthnum') && get_query_var('day') )
 			$redirect = get_day_link(get_query_var('year'), get_query_var('monthnum'), get_query_var('day'));
 		elseif ( is_month() && get_query_var('year') && get_query_var('monthnum') )
@@ -283,10 +283,10 @@ class sem_admin_menu {
 	/**
 	 * get_options()
 	 *
-	 * @return void
+	 * @return array
 	 **/
 
-	function get_options() {
+	static function get_options() {
 		static $o;
 		
 		if ( isset($o) && !is_admin() )
@@ -311,7 +311,7 @@ class sem_admin_menu {
 	/**
 	 * init_options()
 	 *
-	 * @return void
+	 * @return array
 	 **/
 
 	function init_options() {
@@ -328,8 +328,7 @@ class sem_admin_menu {
 		
 		return $o;
 	} # init_options()
-	
-	
+
 	/**
 	 * admin_menu()
 	 *
@@ -369,9 +368,8 @@ if ( !is_admin() ) {
 	add_filter('body_class', array('sem_admin_menu', 'body_class'));
 	
 	# Kill the WP 3.1 admin bar
-	if (function_exists('show_admin_bar')) {
-		show_admin_bar(false);
-	}
+    add_filter( 'show_admin_bar', '__return_false' );
+
 } elseif ( !( function_exists('is_multisite') && is_multisite() ) ) {
 	add_action('admin_menu', array('sem_admin_menu', 'admin_menu'));
 }

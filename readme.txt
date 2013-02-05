@@ -2,8 +2,8 @@
 Contributors: Denis-de-Bernardy
 Donate link: http://www.semiologic.com/partners/
 Tags: admin-menu, admin, cms, semiologic
-Requires at least: 2.8
-Tested up to: 3.2.1
+Requires at least: 3.3
+Tested up to: 3.5
 Stable tag: trunk
 
 The admin menu plugin for WordPress sticks key admin menu links to the top of your blog's screen.
@@ -27,7 +27,7 @@ If you require more dedicated assistance, consider using [Semiologic Pro](http:/
 == Installation ==
 
 1. Upload the plugin folder to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
+2. Activate the plugin through the 'Plugins' menu in WordPress
 
 
 == Screenshots ==
@@ -52,6 +52,12 @@ To configure the behavior, browse Settings / Admin Menu.
 
 
 == Change Log ==
+
+= 6.1 =
+
+- Fixed disabling of WordPress
+- WP 3.5 compat
+- Replace deprecated functions
 
 = 6.0.5 =
 
