@@ -366,8 +366,8 @@ if ( !is_admin() ) {
 	add_action('wp_footer', array('sem_admin_menu', 'display_menu'));
 
 	add_filter('body_class', array('sem_admin_menu', 'body_class'));
-	
-	# Kill the WP 3.1 admin bar
+
+    # Kill the WP 3.1 admin bar
     add_filter( 'show_admin_bar', '__return_false' );
 
 } elseif ( !( function_exists('is_multisite') && is_multisite() ) ) {
