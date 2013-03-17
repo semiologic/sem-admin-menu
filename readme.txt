@@ -55,6 +55,10 @@ To configure the behavior, browse Settings / Admin Menu.
 
 == Change Log ==
 
+= 6.1.1 =
+
+- Fix svn versioning issue
+
 = 6.1 =
 
 - Fixed disabling of WordPress admin bar in WP 3.3+
