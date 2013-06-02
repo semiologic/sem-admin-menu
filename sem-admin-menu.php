@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu
 Plugin URI: http://www.semiologic.com/software/admin-menu/
 Description: Adds a convenient admin menu to your blog. Configure its visibility under <a href="options-general.php?page=admin-menu">Settings / Admin Menu</a>.
-Version: 6.1.1
+Version: 6.2
 Author: Denis de Bernardy & Mike Koepke
 Author URI: http://www.getsemiologic.com
 Text Domain: sem-admin-menu
@@ -116,7 +116,7 @@ class sem_admin_menu {
 			if ( get_option('users_can_register') ) {
 				echo '<span class="am_user">'
 							. apply_filters('loginout',
-								'<a href="' . wp_login_url() . '?action=register">'
+								'<a href="' . wp_login_url() . '?action=register" rel="nofollow">'
 									. __('Register', 'sem-admin-menu')
 									. "</a>"
 								)
@@ -126,7 +126,7 @@ class sem_admin_menu {
 
 			echo '<span class="am_user">'
 					. apply_filters('loginout',
-						'<a href="' . wp_login_url($redirect) . '">'
+						'<a href="' . wp_login_url($redirect) . '" rel="nofollow">'
 							. __('Login', 'sem-admin-menu')
 							. "</a>"
 						)
