@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu
 Plugin URI: http://www.semiologic.com/software/admin-menu/
 Description: Adds a convenient admin menu to your blog. Configure its visibility under <a href="options-general.php?page=admin-menu">Settings / Admin Menu</a>.
-Version: 6.2
+Version: 6.2.1
 Author: Denis de Bernardy & Mike Koepke
 Author URI: http://www.getsemiologic.com
 Text Domain: sem-admin-menu
@@ -39,17 +39,17 @@ class sem_admin_menu {
 	function styles() {
 		$user = wp_get_current_user();
 		$options = sem_admin_menu::get_options();
-		
+
 		if ( !$user->ID && !$options['always_on'] )
 			return;
-		
+
 		$folder = plugin_dir_url(__FILE__);
 		$css = $folder . 'css/sem-admin-menu.css';
-		
+
 		wp_enqueue_style('sem_admin_menu', $css, null, '20090903');
 	} # styles()
-	
-	
+
+
 	/**
 	 * body_class()
 	 *
@@ -60,15 +60,15 @@ class sem_admin_menu {
 	function body_class($classes) {
 		if ( isset($_GET['action']) && $_GET['action'] == 'print' )
 			return $classes;
-		
+
 		$user = wp_get_current_user();
 		$options = sem_admin_menu::get_options();
-		
+
 		if ( !$user->ID && !$options['always_on'] )
 			return $classes;
-		
+
 		$classes[] = 'sem_admin_menu';
-		
+
 		return $classes;
 	} # body_class()
 
@@ -82,16 +82,16 @@ class sem_admin_menu {
 	function display_menu() {
 		if ( isset($_GET['action']) && $_GET['action'] == 'print' )
 			return;
-		
+
 		$user = wp_get_current_user();
 
 		$admin_url = trailingslashit(admin_url());
-		
+
 		$options = sem_admin_menu::get_options();
-		
+
 		global $wp_the_query;
 		$redirect = null;
-		
+
 		if ( is_home() && $wp_the_query->is_posts_page )
 			$redirect = apply_filters('the_permalink', get_permalink($wp_the_query->get_queried_object_id()));
 		elseif ( !is_front_page() && is_singular() )
@@ -108,11 +108,11 @@ class sem_admin_menu {
 			$redirect = get_month_link(get_query_var('year'), get_query_var('monthnum'));
 		elseif ( is_year() && get_query_var('year') )
 			$redirect = get_year_link(get_query_var('year'));
-		
+
 		if ( !$user->ID && $options['always_on'] ) {
 			echo '<div id="am">' . "\n"
 				. '<div>' . "\n";
-			
+
 			if ( get_option('users_can_register') ) {
 				echo '<span class="am_user">'
 							. apply_filters('loginout',
@@ -131,13 +131,13 @@ class sem_admin_menu {
 							. "</a>"
 						)
 					. "</span>";
-			
+
 			echo '</div>' . "\n"
 				. '</div>' . "\n";
 		} elseif ( $user->ID ) {
 			echo '<div id="am">' . "\n"
 				. '<div>' . "\n";
-			
+
 			if ( current_user_can('edit_posts') ) {
 				echo '<span class="am_new">'
 					. '<a href="' . $admin_url . 'post-new.php">'
@@ -146,7 +146,7 @@ class sem_admin_menu {
 					. '</span>'
 					. ' ';
 			}
-			
+
 			if ( current_user_can('edit_pages') ) {
 				if ( is_page() && !is_front_page() ) {
 					global $wp_the_query;
@@ -156,12 +156,12 @@ class sem_admin_menu {
 				} else {
 					$parent_id = '';
 				}
-				
+
 				if ( $parent_id ) {
 					$parent_id = ( function_exists('is_super_admin') ? '&amp;' : '?' )
 						. 'parent_id=' . $parent_id;
 				}
-				
+
 				echo '<span class="am_new">'
 					. '<a href="' . $admin_url
 						. ( function_exists('is_super_admin')
@@ -174,7 +174,7 @@ class sem_admin_menu {
 					. '</span>'
 					. ' ';
 			}
-			
+
 			if ( is_page() && current_user_can('edit_pages') ) {
 				echo '<span class="am_manage">'
 					. '<a href="' . $admin_url
@@ -195,7 +195,7 @@ class sem_admin_menu {
 					. '</span>'
 					. ' ';
 			}
-			
+
 			if ( current_user_can('edit_posts') || current_user_can('edit_pages') ) {
 				echo '<span class="am_comments">'
 					. '<a href="' . $admin_url . 'edit-comments.php">'
@@ -204,7 +204,7 @@ class sem_admin_menu {
 					. '</span>'
 					. ' ';
 			}
-				
+
 			if ( current_user_can('switch_themes') ) {
 				global $wp_registered_sidebars;
 				$using_widgets = !empty($wp_registered_sidebars)
@@ -212,14 +212,14 @@ class sem_admin_menu {
 					|| isset($wp_registered_sidebars['wp_inactive_widgets'])
 						&& count($wp_registered_sidebars) > 1
 					);
-				
+
 				echo '<span class="am_options">'
 					. '<a href="' . $admin_url . 'themes.php' . '">'
 						. __('Themes', 'sem-admin-menu')
 						. '</a>'
 					. '</span>'
 					. ' ';
-				
+
 				if ( $using_widgets ) {
 					echo '<span class="am_options">'
 						. '<a href="' . $admin_url . 'widgets.php' . '">'
@@ -229,7 +229,7 @@ class sem_admin_menu {
 						. ' ';
 				}
 			}
-			
+
 			if ( current_user_can('activate_plugins') ) {
 				echo '<span class="am_options">'
 					. '<a href="' . $admin_url . 'plugins.php">'
@@ -238,7 +238,7 @@ class sem_admin_menu {
 					. '</span>'
 					. ' ';
 			}
-			
+
 			if ( current_user_can('manage_options') ) {
 				echo '<span class="am_options">'
 					. '<a href="' . $admin_url . 'options-general.php">'
@@ -247,9 +247,9 @@ class sem_admin_menu {
 					. '</span>'
 					. ' ';
 			}
-			
+
 			do_action('sem_admin_menu_settings');
-			
+
 			echo '<span class="am_dashboard">'
 				. '<a href="' . $admin_url . '">'
 					. __('Dashboard', 'sem-admin-menu')
@@ -263,9 +263,9 @@ class sem_admin_menu {
 						. '</a>'
 					. '</span>'
 					. ' ';
-			
+
 			do_action('sem_admin_menu_user');
-			
+
 			echo '<span class="am_user">'
 					. apply_filters('loginout',
 						'<a href="' . wp_logout_url($redirect) . '">'
@@ -273,13 +273,13 @@ class sem_admin_menu {
 							. '</a>'
 						)
 					. '</span>';
-			
+
 			echo '</div>' . "\n"
 				. '</div>' . "\n";
 		}
 	} # display_menu()
-	
-	
+
+
 	/**
 	 * get_options()
 	 *
@@ -288,26 +288,26 @@ class sem_admin_menu {
 
 	static function get_options() {
 		static $o;
-		
+
 		if ( isset($o) && !is_admin() )
 			return $o;
-		
+
 		if ( function_exists('is_multisite') && is_multisite() ) {
 			$o = array(
 				'always_on' => true,
 				);
 			return $o;
 		}
-		
+
 		$o = get_option('sem_admin_menu');
-		
+
 		if ( $o === false )
 			$o = sem_admin_menu::init_options();
-		
+
 		return $o;
 	} # get_options()
-	
-	
+
+
 	/**
 	 * init_options()
 	 *
@@ -318,14 +318,14 @@ class sem_admin_menu {
 		$o = array(
 			'always_on' => true
 			);
-		
+
 		if ( $old = get_option('sem_admin_menu_params') ) {
 			$o = wp_parse_args($old, $o);
 			delete_option('sem_admin_menu_params');
 		}
-		
+
 		update_option('sem_admin_menu', $o);
-		
+
 		return $o;
 	} # init_options()
 
@@ -334,11 +334,11 @@ class sem_admin_menu {
 	 *
 	 * @return void
 	 **/
-	
+
 	function admin_menu() {
 		if ( function_exists('is_multisite') && is_multisite() )
 			return;
-		
+
 		add_options_page(
 			__('Admin Menu', 'sem-admin-menu'),
 			__('Admin Menu', 'sem-admin-menu'),

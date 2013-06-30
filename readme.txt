@@ -55,6 +55,10 @@ To configure the behavior, browse Settings / Admin Menu.
 
 == Change Log ==
 
+= 6.2.1 = 
+
+- Fix width of toolbar on IOS devices
+
 = 6.2 =
 
 - Login and Register links are set to nofollow now.
