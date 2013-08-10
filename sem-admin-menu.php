@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu
 Plugin URI: http://www.semiologic.com/software/admin-menu/
 Description: Adds a convenient admin menu to your blog. Configure its visibility under <a href="options-general.php?page=admin-menu">Settings / Admin Menu</a>.
-Version: 6.2.1
+Version: 6.3
 Author: Denis de Bernardy & Mike Koepke
 Author URI: http://www.getsemiologic.com
 Text Domain: sem-admin-menu
@@ -30,7 +30,25 @@ load_plugin_textdomain('sem-admin-menu', false, dirname(plugin_basename(__FILE__
  **/
 
 class sem_admin_menu {
-	/**
+    /**
+     * sem_admin_menu()
+     */
+    function sem_admin_menu() {
+        if ( !is_admin() ) {
+        	add_action('wp_print_styles', array($this, 'styles'));
+        	add_action('wp_footer', array($this, 'display_menu'));
+
+        	add_filter('body_class', array($this, 'body_class'));
+
+            # Kill the WP 3.1 admin bar
+            add_filter( 'show_admin_bar', '__return_false' );
+
+        } elseif ( !( function_exists('is_multisite') && is_multisite() ) ) {
+        	add_action('admin_menu', array($this, 'admin_menu'));
+        }
+    }
+
+    /**
 	 * styles()
 	 *
 	 * @return void
@@ -361,16 +379,5 @@ if ( function_exists('is_multisite') && is_admin() &&
 	isset($_GET['post_type']) && $_GET['post_type'] == 'page' )
 	add_action('load-post-new.php', 'sem_admin_menu_admin');
 
-if ( !is_admin() ) {
-	add_action('wp_print_styles', array('sem_admin_menu', 'styles'));
-	add_action('wp_footer', array('sem_admin_menu', 'display_menu'));
-
-	add_filter('body_class', array('sem_admin_menu', 'body_class'));
-
-    # Kill the WP 3.1 admin bar
-    add_filter( 'show_admin_bar', '__return_false' );
-
-} elseif ( !( function_exists('is_multisite') && is_multisite() ) ) {
-	add_action('admin_menu', array('sem_admin_menu', 'admin_menu'));
-}
+$sem_admin_menu = new sem_admin_menu();
 ?>

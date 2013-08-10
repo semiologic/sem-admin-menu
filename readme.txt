@@ -55,6 +55,11 @@ To configure the behavior, browse Settings / Admin Menu.
 
 == Change Log ==
 
+= 6.3 =
+
+- WP 3.6 compat
+- PHP 5.4 compat
+
 = 6.2.1 = 
 
 - Fix width of toolbar on IOS devices

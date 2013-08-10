@@ -6,7 +6,15 @@
  **/
 
 class sem_admin_menu_admin {
-	/**
+    /**
+     * sem_admin_menu_admin()
+     */
+    function sem_admin_menu_admin() {
+        add_action('settings_page_admin-menu', array($this, 'save_options'), 0);
+        add_action('submitpage_box', array($this, 'set_parent_id'), 0);
+    }
+
+    /**
 	 * set_parent_id()
 	 *
 	 * @return void
@@ -57,7 +65,7 @@ class sem_admin_menu_admin {
 	 * @return void
 	 **/
 
-	function edit_options() {
+	static function edit_options() {
 		echo '<div class="wrap">' . "\n"
 			. '<form method="post" action="">';
 
@@ -103,6 +111,5 @@ class sem_admin_menu_admin {
 	} # edit_options()
 } # sem_admin_menu_admin
 
-add_action('settings_page_admin-menu', array('sem_admin_menu_admin', 'save_options'), 0);
-add_action('submitpage_box', array('sem_admin_menu_admin', 'set_parent_id'), 0);
+$sem_admin_menu_admin = new sem_admin_menu_admin();
 ?>
