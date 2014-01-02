@@ -3,7 +3,7 @@ Contributors: Denis-de-Bernardy, Mike_Koepke
 Donate link: http://www.semiologic.com/partners/
 Tags: admin-menu, admin, cms, semiologic
 Requires at least: 3.3
-Tested up to: 3.6
+Tested up to: 3.8
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -18,6 +18,10 @@ The admin menu plugin for WordPress sticks key admin menu links to the top of yo
 The menu will automatically appear to the top of your blog. Menu items will only be visible when relevant.
 
 It's quite useful for those who run their WP install as a CMS. When you create a static page using its New Page link, it will also set the new page's parent automatically, to the ongoing page.
+
+= Hat Translators =
+
+- Spanish: Andrew [WebHostingHub](http://www.webhostinghub.com/)
 
 = Help Me! =
 
@@ -54,6 +58,11 @@ To configure the behavior, browse Settings / Admin Menu.
 
 
 == Change Log ==
+
+= 6.4 =
+
+- Added spanish translations.
+- WP 3.8 compat
 
 = 6.3 =
 

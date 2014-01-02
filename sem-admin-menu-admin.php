@@ -9,7 +9,7 @@ class sem_admin_menu_admin {
     /**
      * sem_admin_menu_admin()
      */
-    function sem_admin_menu_admin() {
+	public function __construct() {
         add_action('settings_page_admin-menu', array($this, 'save_options'), 0);
         add_action('submitpage_box', array($this, 'set_parent_id'), 0);
     }
@@ -70,8 +70,6 @@ class sem_admin_menu_admin {
 			. '<form method="post" action="">';
 
 		wp_nonce_field('admin_menu');
-
-		screen_icon();
 		
 		echo '<h2>' . __('Admin Menu Settings', 'sem-admin-menu') . '</h2>' . "\n";
 		
@@ -112,4 +110,3 @@ class sem_admin_menu_admin {
 } # sem_admin_menu_admin
 
 $sem_admin_menu_admin = new sem_admin_menu_admin();
-?>

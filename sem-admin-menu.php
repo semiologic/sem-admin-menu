@@ -3,20 +3,19 @@
 Plugin Name: Admin Menu
 Plugin URI: http://www.semiologic.com/software/admin-menu/
 Description: Adds a convenient admin menu to your blog. Configure its visibility under <a href="options-general.php?page=admin-menu">Settings / Admin Menu</a>.
-Version: 6.3
+Version: 6.4
 Author: Denis de Bernardy & Mike Koepke
 Author URI: http://www.getsemiologic.com
 Text Domain: sem-admin-menu
 Domain Path: /lang
+License: Dual licensed under the MIT and GPLv2 licenses
 */
 
 /*
 Terms of use
 ------------
 
-This software is copyright Mesoconcepts (http://www.mesoconcepts.com), and is distributed under the terms of the GPL license, v.2.
-
-http://www.opensource.org/licenses/gpl-2.0.php
+This software is copyright Denis de Bernardy & Mike Koepke, and is distributed under the terms of the MIT and GPLv2 licenses.
 **/
 
 
@@ -33,7 +32,7 @@ class sem_admin_menu {
     /**
      * sem_admin_menu()
      */
-    function sem_admin_menu() {
+	public function __construct() {
         if ( !is_admin() ) {
         	add_action('wp_print_styles', array($this, 'styles'));
         	add_action('wp_footer', array($this, 'display_menu'));
@@ -380,4 +379,3 @@ if ( function_exists('is_multisite') && is_admin() &&
 	add_action('load-post-new.php', 'sem_admin_menu_admin');
 
 $sem_admin_menu = new sem_admin_menu();
-?>
