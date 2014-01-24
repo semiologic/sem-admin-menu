@@ -59,6 +59,10 @@ To configure the behavior, browse Settings / Admin Menu.
 
 == Change Log ==
 
+= 6.4.1 =
+
+- Spanish files missing in checkin.   Re-release.
+
 = 6.4 =
 
 - Added spanish translations.
