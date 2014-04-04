@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu
 Plugin URI: http://www.semiologic.com/software/admin-menu/
 Description: Adds a convenient admin menu to your blog. Configure its visibility under <a href="options-general.php?page=admin-menu">Settings / Admin Menu</a>.
-Version: 6.4.1
+Version: 6.5 dev
 Author: Denis de Bernardy & Mike Koepke
 Author URI: http://www.getsemiologic.com
 Text Domain: sem-admin-menu
@@ -19,9 +19,6 @@ This software is copyright Denis de Bernardy & Mike Koepke, and is distributed u
 **/
 
 
-load_plugin_textdomain('sem-admin-menu', false, dirname(plugin_basename(__FILE__)) . '/lang');
-
-
 /**
  * sem_admin_menu
  *
@@ -29,23 +26,113 @@ load_plugin_textdomain('sem-admin-menu', false, dirname(plugin_basename(__FILE__
  **/
 
 class sem_admin_menu {
-    /**
-     * sem_admin_menu()
-     */
+	/**
+	 * Plugin instance.
+	 *
+	 * @see get_instance()
+	 * @type object
+	 */
+	protected static $instance = NULL;
+
+	/**
+	 * URL to this plugin's directory.
+	 *
+	 * @type string
+	 */
+	public $plugin_url = '';
+
+	/**
+	 * Path to this plugin's directory.
+	 *
+	 * @type string
+	 */
+	public $plugin_path = '';
+
+	/**
+	 * Access this plugin’s working instance
+	 *
+	 * @wp-hook plugins_loaded
+	 * @return  object of this class
+	 */
+	public static function get_instance()
+	{
+		NULL === self::$instance and self::$instance = new self;
+
+		return self::$instance;
+	}
+
+	/**
+	 * Loads translation file.
+	 *
+	 * Accessible to other classes to load different language files (admin and
+	 * front-end for example).
+	 *
+	 * @wp-hook init
+	 * @param   string $domain
+	 * @return  void
+	 */
+	public function load_language( $domain )
+	{
+		load_plugin_textdomain(
+			$domain,
+			FALSE,
+			$this->plugin_path . 'lang'
+		);
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 *
+	 */
+
 	public function __construct() {
-        if ( !is_admin() ) {
-        	add_action('wp_print_styles', array($this, 'styles'));
-        	add_action('wp_footer', array($this, 'display_menu'));
+		$this->plugin_url    = plugins_url( '/', __FILE__ );
+		$this->plugin_path   = plugin_dir_path( __FILE__ );
+		$this->load_language( 'sem-admin-menu' );
 
-        	add_filter('body_class', array($this, 'body_class'));
-
-            # Kill the WP 3.1 admin bar
-            add_filter( 'show_admin_bar', '__return_false' );
-
-        } elseif ( !( function_exists('is_multisite') && is_multisite() ) ) {
-        	add_action('admin_menu', array($this, 'admin_menu'));
-        }
+		add_action( 'plugins_loaded', array ( $this, 'init' ) );
     }
+
+	/**
+	 * init()
+	 *
+	 * @return void
+	 **/
+
+	function init() {
+		// more stuff: register actions and filters
+		if ( !is_admin() ) {
+		    add_action('wp_print_styles', array($this, 'styles'));
+		    add_action('wp_footer', array($this, 'display_menu'));
+
+		    add_filter('body_class', array($this, 'body_class'));
+
+		      # Kill the WP 3.1 admin bar
+		      add_filter( 'show_admin_bar', '__return_false' );
+
+	    } else {
+			foreach ( array('load-page-new.php', 'load-settings_page_admin-menu') as $hook )
+				add_action($hook, array($this, 'sem_admin_menu_admin'));
+
+			if ( !( function_exists('is_multisite') && is_multisite() ) ) {
+		        add_action('admin_menu', array($this, 'admin_menu'));
+
+				if ( isset($_GET['post_type']) && $_GET['post_type'] == 'page' )
+					add_action('load-post-new.php', 'sem_admin_menu_admin');
+			}
+	    }
+	}
+
+
+	/**
+	* sem_admin_menu_admin()
+	*
+	* @return void
+	**/
+	function sem_admin_menu_admin() {
+		 	include_once dirname(__FILE__) . '/sem-admin-menu-admin.php';
+		} # sem_admin_menu_admin()
 
     /**
 	 * styles()
@@ -366,16 +453,4 @@ class sem_admin_menu {
 	} # admin_menu()
 } # sem_admin_menu
 
-
-function sem_admin_menu_admin() {
- 	include_once dirname(__FILE__) . '/sem-admin-menu-admin.php';
-} # sem_admin_menu_admin()
-
-foreach ( array('load-page-new.php', 'load-settings_page_admin-menu') as $hook )
-	add_action($hook, 'sem_admin_menu_admin');
-
-if ( function_exists('is_multisite') && is_admin() &&
-	isset($_GET['post_type']) && $_GET['post_type'] == 'page' )
-	add_action('load-post-new.php', 'sem_admin_menu_admin');
-
-$sem_admin_menu = new sem_admin_menu();
+$sem_admin_menu = sem_admin_menu::get_instance();

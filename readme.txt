@@ -59,6 +59,10 @@ To configure the behavior, browse Settings / Admin Menu.
 
 == Change Log ==
 
+= 6.5 =
+
+- Code refactoring
+
 = 6.4.1 =
 
 - Spanish files missing in checkin.   Re-release.
