@@ -59,6 +59,10 @@ To configure the behavior, browse Settings / Admin Menu.
 
 == Change Log ==
 
+= 6.5.1 =
+
+- Fix localization
+
 = 6.5 =
 
 - Code refactoring
