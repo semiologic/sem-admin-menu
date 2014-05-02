@@ -59,6 +59,10 @@ To configure the behavior, browse Settings / Admin Menu.
 
 == Change Log ==
 
+= 6.5.2 =
+
+- Fix php warning message regarding sem_admin_menu_admin
+
 = 6.5.1 =
 
 - Fix localization
