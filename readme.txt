@@ -59,6 +59,10 @@ To configure the behavior, browse Settings / Admin Menu.
 
 == Change Log ==
 
+= 6.6 =
+
+- Don't display the frontend admin menu bar for a wordPress detected mobile site.
+
 = 6.5.2 =
 
 - Fix php warning message regarding sem_admin_menu_admin

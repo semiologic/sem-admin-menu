@@ -3,7 +3,7 @@
 Plugin Name: Admin Menu
 Plugin URI: http://www.semiologic.com/software/admin-menu/
 Description: Adds a convenient admin menu to your blog. Configure its visibility under <a href="options-general.php?page=admin-menu">Settings / Admin Menu</a>.
-Version: 6.5.2
+Version: 6.6 dev
 Author: Denis de Bernardy & Mike Koepke
 Author URI: http://www.getsemiologic.com
 Text Domain: sem-admin-menu
@@ -103,13 +103,15 @@ class sem_admin_menu {
 	function init() {
 		// more stuff: register actions and filters
 		if ( !is_admin() ) {
-		    add_action('wp_enqueue_scripts', array($this, 'styles'));
-		    add_action('wp_footer', array($this, 'display_menu'));
+			if (  !wp_is_mobile() ) {
+				add_action('wp_enqueue_scripts', array($this, 'styles'));
+			    add_action('wp_footer', array($this, 'display_menu'));
 
-		    add_filter('body_class', array($this, 'body_class'));
+			    add_filter('body_class', array($this, 'body_class'));
 
-		      # Kill the WP 3.1 admin bar
-		      add_filter( 'show_admin_bar', '__return_false' );
+				# Kill the WP 3.1 admin bar
+				add_filter( 'show_admin_bar', '__return_false' );
+			}
 
 	    } else {
 			foreach ( array('load-page-new.php', 'load-settings_page_admin-menu') as $hook )
@@ -382,7 +384,6 @@ class sem_admin_menu {
 				. '</div>' . "\n";
 		}
 	} # display_menu()
-
 
 	/**
 	 * get_options()
