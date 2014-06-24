@@ -59,6 +59,10 @@ To configure the behavior, browse Settings / Admin Menu.
 
 == Change Log ==
 
+= 6.6.1 =
+
+- Re-release due to svn glitch
+
 = 6.6 =
 
 - Don't display the frontend admin menu bar for a wordPress detected mobile site.
