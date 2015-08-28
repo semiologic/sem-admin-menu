@@ -2,8 +2,8 @@
 /*
 Plugin Name: Admin Menu
 Plugin URI: http://www.semiologic.com/software/admin-menu/
-Description: Adds a convenient admin menu to your blog. Configure its visibility under <a href="options-general.php?page=admin-menu">Settings / Admin Menu</a>.
-Version: 6.7
+Description: RETIRED - Adds a convenient admin menu to your blog. Configure its visibility under <a href="options-general.php?page=admin-menu">Settings / Admin Menu</a>.
+Version: 6.7.1
 Author: Denis de Bernardy & Mike Koepke
 Author URI: http://www.getsemiologic.com
 Text Domain: sem-admin-menu
@@ -17,6 +17,11 @@ Terms of use
 
 This software is copyright Denis de Bernardy & Mike Koepke, and is distributed under the terms of the MIT and GPLv2 licenses.
 **/
+
+/*
+ * This plugin has been retired.  No further development will occur on it.
+ * */
+
 
 
 /**
