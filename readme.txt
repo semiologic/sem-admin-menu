@@ -8,12 +8,14 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-> *This plugin has been retired.  No further development will occur on it.*  With a menu bar built into WordPress and the fact other plugins hook into that, this plugin conflicts with that capability
 
 The admin menu plugin for WordPress sticks key admin menu links to the top of your blog's screen.
 
 
 == Description ==
+
+> *This plugin has been retired.  No further development will occur on it.*  With a menu bar built into WordPress and the fact other plugins hook into that, this plugin conflicts with that capability
+
 
 The admin menu plugin for WordPress sticks key admin menu links to the top of your blog's screen.
 
